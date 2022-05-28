@@ -17,7 +17,15 @@ exports.add_user = (req, res) => {
 };
 
 exports.contact = (req, res) => {
-	res.render('contact');
+	// Make a get request to /api/users
+	axios
+		.get('http://localhost:3000/api/users')
+		.then(function (response) {
+			res.render('contact', { users: response.data });
+		})
+		.catch((err) => {
+			res.send(err);
+		});
 };
 
 exports.membership = (req, res) => {
