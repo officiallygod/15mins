@@ -8,11 +8,22 @@ exports.create = (req, res) => {
 		return;
 	}
 
+	phoneNum = req.body.phone;
 	languagesArray = req.body.languages.split(',');
+
+	if (phoneNum.length < 10 || phoneNum.length > 10) {
+		res.status(400).send({ message: 'Mobile number not valid' });
+		return;
+	}
+
+	if (languagesArray.length == 0) {
+		res.status(400).send({ message: 'Minimum 1 language is necessary' });
+		return;
+	}
 
 	// new user
 	const user = new Userdb({
-		phone: req.body.phone,
+		phone: phoneNum,
 		languages: languagesArray,
 		gender: req.body.gender,
 	});
